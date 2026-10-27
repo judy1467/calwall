@@ -1,4 +1,4 @@
-param([switch]$Install)
+param([switch]$Install, [string]$VersionName = "1.0.0", [int]$VersionCode = 1)
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSCommandPath
@@ -19,7 +19,8 @@ if ($LASTEXITCODE -ne 0) { throw "aapt2 compile failed" }
 
 Write-Host "2/6 aapt2 link"
 & $aapt2 link -o "$b\base-unsigned.apk" -I $aj --manifest "$root\app\AndroidManifest.xml" `
-    --java "$b\gen" --min-sdk-version 31 --target-sdk-version 36 "$b\res.zip"
+    --java "$b\gen" --min-sdk-version 31 --target-sdk-version 36 `
+    --version-code $VersionCode --version-name $VersionName "$b\res.zip"
 if ($LASTEXITCODE -ne 0) { throw "aapt2 link failed" }
 
 Write-Host "3/6 javac"
@@ -43,8 +44,10 @@ $zip.Dispose()
 if ($LASTEXITCODE -ne 0) { throw "zipalign failed" }
 
 Write-Host "6/6 sign"
-$ks = "$b\calwall.keystore"
+# The keystore lives outside build/ so rebuilding never changes the app signature.
+$ks = "$root\signing\calwall.keystore"
 if (-not (Test-Path $ks)) {
+    New-Item -ItemType Directory -Force -Path (Split-Path $ks) | Out-Null
     & keytool -genkeypair -keystore $ks -storepass calwall -keypass calwall -alias calwall `
         -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=CalWall,OU=DSH,O=DSH,L=Seoul,S=Seoul,C=KR" | Out-Null
 }
@@ -52,6 +55,7 @@ if (-not (Test-Path $ks)) {
 if ($LASTEXITCODE -ne 0) { throw "apksigner failed" }
 
 $size = (Get-Item "$b\calwall.apk").Length
+Copy-Item "$b\calwall.apk" "$root\CalWall-$VersionName.apk" -Force
 Write-Host "built: $b\calwall.apk ($size bytes)"
 
 if ($Install) {
@@ -60,3 +64,4 @@ if ($Install) {
     if ($LASTEXITCODE -ne 0) { throw "install failed" }
     & $adb shell am start -n dev.dsh.calwall/.MainActivity
 }
+

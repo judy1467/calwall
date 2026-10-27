@@ -3,9 +3,11 @@ build/
 *.apk
 *.orig
 # local signing material
+signing/
 *.keystore
 *.jks
 # editor / os
 .vscode/
 .idea/
 Thumbs.db
+

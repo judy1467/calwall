@@ -2,6 +2,13 @@
 
 Layered(중단된 앱)를 대체하려고 만든 개인용 앱. **잠금 화면에만** 적용되고, 매일 새벽에 자동으로 다시 그린다.
 
+## 설치
+1. [Releases](https://github.com/judy1467/calwall/releases) 에서 최신 `CalWall-x.y.z.apk` 를 내려받는다
+2. 휴대폰에서 "출처를 알 수 없는 앱" 설치를 허용하고 APK를 연다 (Android 12 이상)
+3. 첫 실행 시 **캘린더 권한**을 허용 → `사진 선택` → `잠금 화면에 적용`
+
+> 업데이트는 같은 서명 키로 만든 APK만 덮어쓸 수 있습니다. 서명 키(`signing/calwall.keystore`)는 저장소에 올리지 않습니다.
+
 ## 기능
 - 사용자가 고른 사진 위에 캘린더를 얹는다 (사진 선택: `ACTION_OPEN_DOCUMENT`, 권한은 영구 보존)
 - 이번 주부터 4주치를 **주 단위 스트립**으로 표시, 일정은 기간만큼 늘어나는 색 바
@@ -61,4 +68,5 @@ Gradle 없이 aapt2 → javac → d8 → zipalign → apksigner 순서로 빌드
 - 적용 후 `dumpsys alarm`에 `dev.dsh.calwall.ALARM` 00:05 등록 확인
 
 > 개인용으로 만든 앱입니다. 빌드 산출물(APK)과 서명 키는 저장소에 포함하지 않습니다.
+
 
