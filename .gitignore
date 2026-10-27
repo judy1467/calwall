@@ -1,0 +1,11 @@
+# build output
+build/
+*.apk
+*.orig
+# local signing material
+*.keystore
+*.jks
+# editor / os
+.vscode/
+.idea/
+Thumbs.db
