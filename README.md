@@ -73,5 +73,6 @@ Gradle 없이 aapt2 → javac → d8 → zipalign → apksigner 순서로 빌드
 
 > 개인용으로 만든 앱입니다. 빌드 산출물(APK)과 서명 키는 저장소에 포함하지 않습니다.
 
-
+## 라이선스
+MIT License — [LICENSE](LICENSE)
 
