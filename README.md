@@ -2,6 +2,10 @@
 
 Layered(중단된 앱)를 대체하려고 만든 개인용 앱. **잠금 화면에만** 적용되고, 매일 새벽에 자동으로 다시 그린다.
 
+## 문서
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — 구성 요소, 갱신 파이프라인, 캔버스/레이아웃 모델, 일정 처리, 설정 키, 한계
+- [docs/RELEASE.md](docs/RELEASE.md) — 빌드·서명 키 관리·릴리스 절차·배포 후 확인
+
 ## 설치
 1. [Releases](https://github.com/judy1467/calwall/releases) 에서 최신 `CalWall-x.y.z.apk` 를 내려받는다
 2. 휴대폰에서 "출처를 알 수 없는 앱" 설치를 허용하고 APK를 연다 (Android 12 이상)
@@ -68,5 +72,6 @@ Gradle 없이 aapt2 → javac → d8 → zipalign → apksigner 순서로 빌드
 - 적용 후 `dumpsys alarm`에 `dev.dsh.calwall.ALARM` 00:05 등록 확인
 
 > 개인용으로 만든 앱입니다. 빌드 산출물(APK)과 서명 키는 저장소에 포함하지 않습니다.
+
 
 
